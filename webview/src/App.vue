@@ -1,5 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
+import { AjaxSender } from './interface';
+
+const ajax: AjaxSender = inject('$ajax')!
+
+ajax.send({
+  method: 'get',
+  url: '/ping',
+  data: {message: 'test'}
+}).then((data: any) => {
+  console.log("=================success", data)
+}).catch((error) => {
+  console.log("==========error", error)
+})
 
 const value1 = ref('home page')
 </script>

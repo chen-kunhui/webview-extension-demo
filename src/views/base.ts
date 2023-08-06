@@ -29,5 +29,16 @@ export abstract class BaseView implements View {
         );
         this.webview = panel.webview;
         this.webview.html = renderHtml(this);
+
+        this.webview.onDidReceiveMessage((data: any) => {
+            console.log("================onDidReceiveMessage", data)
+            panel.webview.postMessage({
+                uuid: data.uuid,
+                request: data.request,
+                status: 200,
+                statusText: 'success',
+                data: {message: 'success'}
+            })
+        })
     }
 }
