@@ -1,0 +1,15 @@
+{
+    "files.exclude": { // 控制是否隐藏文件夹
+        "dist": false,
+        "webview/dist": true
+    },
+    "search.exclude": { // 控制全局搜索时是否排除对应文件夹
+        "dist": true,
+        "webview/dist": true
+    },
+    // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
+    "typescript.tsc.autoDetect": "off",
+    "cSpell.words": [
+        "crossorigin"
+    ]
+}
