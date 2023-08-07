@@ -1,5 +1,5 @@
 import './style.css';
 import App from './App.vue';
-import { createVue } from '../../base';
+import { createVue } from '../../adapter/base';
 
 createVue(App)

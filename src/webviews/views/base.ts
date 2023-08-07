@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import { View } from './interface';
 import { renderHtml } from './utils';
 import { webviewResourcePath } from './constant';
+import { RouteDispatcher } from '../driver/router';
+import { URLS } from '../urls';
 
 export abstract class BaseView implements View {
     abstract readonly page: vscode.Uri;
@@ -28,17 +30,8 @@ export abstract class BaseView implements View {
             }
         );
         this.webview = panel.webview;
-        this.webview.html = renderHtml(this);
+        new RouteDispatcher(URLS).mount(this.webview)
 
-        this.webview.onDidReceiveMessage((data: any) => {
-            console.log("================onDidReceiveMessage", data)
-            panel.webview.postMessage({
-                uuid: data.uuid,
-                request: data.request,
-                status: 200,
-                statusText: 'success',
-                data: {message: 'success'}
-            })
-        })
+        this.webview.html = renderHtml(this);
     }
 }

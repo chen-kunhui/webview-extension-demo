@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { Page1View, Page2View, PageHomeView } from './views/demoView'
+import { Page1View, Page2View, PageHomeView } from './webviews/views/demoView'
 
 export function activate(context: vscode.ExtensionContext) {
 	vscode.window.showInformationMessage("start ...")

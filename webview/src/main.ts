@@ -1,4 +1,4 @@
-import { createVue } from './base'
+import { createVue } from './adapter/base'
 import './style.scss'
 import App from './App.vue'
 
