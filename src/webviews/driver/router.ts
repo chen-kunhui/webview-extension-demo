@@ -41,11 +41,11 @@ export class RouteDispatcher {
                 return respond(400, 'Disallowed request type!')
             }
 
-            route.handle.call(route.thisArgs, req.request, respond)
+            route.handle.call(webview, req.request, respond)
         })
     }
 }
 
-export function path(method: HttpMethod, url: string, handle: any, thisArgs?: any): Route {
-    return {method, url, handle, thisArgs}
+export function path(method: HttpMethod, url: string, handle: any): Route {
+    return {method, url, handle}
 }

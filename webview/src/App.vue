@@ -22,7 +22,9 @@ const value1 = ref('home page')
     <img src="./assets/vue.svg" class="logo" alt="Vite logo" />
     <img src="/vite.svg" class="logo" alt="Vite logo" />
   </div>
-  <div>Home - {{ value1 }}</div>
+  <div>Home - {{ value1 }} <el-icon>
+      <Edit />
+    </el-icon></div>
   <ul>
     <li><a href="/src/pages/page1/index.html">查看 page1 /src/pages/page1/index.html</a></li>
     <li><a href="/src/pages/page2/index.html">查看 page2 /src/pages/page2/index.html</a></li>

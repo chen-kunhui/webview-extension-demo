@@ -15,7 +15,7 @@ export interface ViewServer {
 export interface Request {
     method: HttpMethod,
     url: string,
-data: { [key: string]: any }
+    data: { [key: string]: any }
 }
 
 export type Respond = {
@@ -25,6 +25,5 @@ export type Respond = {
 export interface Route {
     method: HttpMethod
     url: string
-    handle: (request: Request, respond: Respond) => void | any,
-    thisArgs?: any
+    handle: (request: Request, respond: Respond) => void | any
 }
