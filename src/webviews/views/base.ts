@@ -1,25 +1,25 @@
-import * as vscode from 'vscode'
+import {Uri, Webview, ViewColumn, window} from 'vscode'
 import { View } from './interface'
-import { RouteDispatcher } from '../driver/router'
 import { URLS } from '../urls'
 import { readFileSync } from 'fs'
+import { RouteDispatcher } from 'simple-webview'
 
 export abstract class BaseView implements View {
-    abstract readonly page: vscode.Uri;
-    protected webview: vscode.Webview | undefined | null;
-    protected readonly webviewResourceRoot: vscode.Uri
+    abstract readonly page: Uri;
+    protected webview: Webview | undefined | null;
+    protected readonly webviewResourceRoot: Uri
 
     constructor (
-        public extensionUri: vscode.Uri,
+        public extensionUri: Uri,
         public readonly title: string,
         public readonly viewType?: string,
     ) {
-        this.webviewResourceRoot = vscode.Uri.joinPath(this.extensionUri, 'webview/dist')
+        this.webviewResourceRoot = Uri.joinPath(this.extensionUri, 'ui/dist')
         this.viewType = viewType || this.title
     }
 
-    public show(viewColumn: vscode.ViewColumn = vscode.ViewColumn.Active) {
-        const panel = vscode.window.createWebviewPanel(
+    public show(viewColumn: ViewColumn = ViewColumn.Active) {
+        const panel = window.createWebviewPanel(
             this.viewType || this.title,
             this.title,
             viewColumn,
@@ -38,7 +38,7 @@ export abstract class BaseView implements View {
         if (!this.webview) {
             return ''
         }
-    
+
         const assetsHost = this.webview.asWebviewUri(this.page)
         const el = `<base href="${assetsHost}" />`
     

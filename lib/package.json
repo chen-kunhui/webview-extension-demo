@@ -1,0 +1,20 @@
+{
+  "name": "simple-webview",
+  "version": "1.0.0",
+  "description": "TypeScript definitions for simple-webview",
+  "license": "MIT",
+  "contributors": [],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {},
+  "scripts": {
+    "build": "tsc"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.2"
+  }
+}

@@ -1,18 +1,16 @@
 import { createApp } from 'vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import { AjaxSender } from './interface';
-import { AjaxRequest } from './ajax';
+import { Socket, SocketImpl } from 'simple-webview';
 
 export function createVue(component: any, callback?: (vue: any) => void) {
-    const vscode = (window as any).acquireVsCodeApi && (window as any).acquireVsCodeApi()
-    const ajax: AjaxSender = new AjaxRequest(vscode);
+    const socket: Socket = new SocketImpl();
 
     let app = createApp(component)
     for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
         app.component(key, component)
     }
 
-    app.provide('$ajax', ajax)
+    app.provide('$socket', socket)
 
     callback && callback(app)
 

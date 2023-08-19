@@ -11,6 +11,7 @@ const pathSrc = resolve(__dirname, 'src')
 export default defineConfig({
   resolve: {
     alias: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       '@': pathSrc,
     },
   },
@@ -45,9 +46,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        pageHome: resolve(__dirname, 'index.html'),
-        page1: resolve(__dirname, 'src/pages/page1/index.html'),
-        page2: resolve(__dirname, 'src/pages/page2/index.html'),
+        home: resolve(__dirname, 'index.html')
       },
     },
   },

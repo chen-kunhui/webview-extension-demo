@@ -1,8 +1,6 @@
-import { ping } from "./controllers/PingController";
-import { HttpMethod, Route } from "./driver/interface";
-import { path } from "./driver/router";
-
+import { Route, registerUrl } from "simple-webview";
+import { ping } from "./controllers/ping";
 
 export const URLS: Route[] = [
-    path(HttpMethod.get, '/ping', ping)
+    registerUrl('/ping', ping)
 ]

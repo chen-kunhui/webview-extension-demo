@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AjaxSender } from './adapter/interface';
+import { Socket } from 'simple-webview';
 import {
   HomeOutlined,
   SettingFilled,
@@ -8,13 +8,9 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons-vue';
 
-const ajax: AjaxSender = inject('$ajax')!
+const socket: Socket = inject('$socket')!
 
-ajax.send({
-  method: 'get',
-  url: '/ping',
-  data: { message: 'test' }
-}).then((data: any) => {
+socket.send('/ping', { message: 'test' }).then((data: any) => {
   console.log("==========success", data)
 }).catch((error) => {
   console.log("============error", error)

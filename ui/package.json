@@ -13,8 +13,8 @@
     "@ant-design/icons-vue": "^6.1.0",
     "@element-plus/icons-vue": "^2.1.0",
     "ant-design-vue": "^4.0.0",
-    "axios": "^1.4.0",
     "element-plus": "^2.3.9",
+    "simple-webview": "file:../lib",
     "vue": "^3.3.4"
   },
   "devDependencies": {
