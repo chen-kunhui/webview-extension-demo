@@ -27,6 +27,7 @@
                 <textarea class="xf-excel-preview-textarea" @input="onTextareaInput"></textarea>
             </div>
             <div class="xf-excel-body">
+                <div class="xf-excel-body-bg"></div>
                 <table cellspacing="0" border="0" cellpadding="0" @click="onTableClick">
                     <thead>
                         <tr>
@@ -121,7 +122,7 @@ onMounted(() => {
         return message.error('缺少 fsPath 信息!')
     }
 
-    socket.send('/csv/editor/init', {fsPath: fsPath.value}).then((data) => {
+    socket.send('/csv/editor/init', {fsPath: fsPath.value}).then(() => {
         page.value = vscodeState.page
         prePage.value = vscodeState.prePage
         activeCellPosition.value.x = vscodeState.activeCellPosition.x

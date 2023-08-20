@@ -5,7 +5,6 @@ import { PanelView } from './webviews/views/panel';
 import { CSVEditor } from './webviews/views/csvEditor';
 
 export function activate(context: vscode.ExtensionContext) {
-	vscode.window.showInformationMessage("start ...")
 	const provider = new SidebarView(context.extensionUri, 'sidebar');
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider('extension-demo.sidebar', provider)
