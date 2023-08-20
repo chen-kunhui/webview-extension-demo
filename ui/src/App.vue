@@ -7,6 +7,7 @@ import {
   SyncOutlined,
   LoadingOutlined,
 } from '@ant-design/icons-vue';
+import IDemo from "@/components/demo.vue"
 
 const socket: Socket = inject('$socket')!
 
@@ -20,9 +21,13 @@ const value1 = ref('home page')
 </script>
 
 <template>
+  <div class="bg">
+    <IDemo></IDemo>
+  </div>
   <div>
     <img src="./assets/vue.svg" class="logo" alt="Vite logo" />
     <img src="/vite.svg" class="logo" alt="Vite logo" />
+
   </div>
   <div>Home - {{ value1 }} <el-icon>
       <Edit />
@@ -64,4 +69,13 @@ const value1 = ref('home page')
     filter: drop-shadow(0 0 2em #42b883aa);
   }
 }
-</style>
+
+.bg {
+  background-image: url(./assets/bg3.jpg);
+  background-size: cover;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100vh;
+}</style>

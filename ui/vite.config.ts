@@ -46,7 +46,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        home: resolve(__dirname, 'index.html')
+        home: resolve(__dirname, 'index.html'),
+        csv: resolve(__dirname, 'src/pages/csv/index.html')
       },
     },
   },

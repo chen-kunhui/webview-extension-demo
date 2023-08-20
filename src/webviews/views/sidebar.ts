@@ -30,9 +30,9 @@ export class SidebarView implements WebviewViewProvider {
 			]
 		};
 
+		new RouteDispatcher(URLS).mount(webviewView.webview)
 		webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
-		new RouteDispatcher(URLS).mount(webviewView.webview)
 	}
 
 	private _getHtmlForWebview(webview: Webview) {

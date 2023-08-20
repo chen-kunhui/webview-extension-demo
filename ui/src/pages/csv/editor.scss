@@ -1,0 +1,243 @@
+body {
+    padding: 0px;
+}
+
+.xf-excel {
+    $xfBorderColor: var(--vscode-editorLineNumber-foreground);
+
+    .xf-contextmenu { // 右键菜单
+        position: fixed;
+        z-index: 99;
+        visibility: hidden;
+        background: var(--vscode-list-dropBackground);
+        color: var(--vscode-list-activeSelectionForeground);
+        ul {
+            padding: 0px;
+            margin: 0px;
+            min-width: 100px;
+        }
+        li {
+            list-style: none;
+            height: 20px;
+            padding: 5px;
+
+            &:hover {
+                background: var(--vscode-list-focusHighlightForeground);
+                cursor: pointer;
+            }
+        }
+    }
+    .cf-search { // ctrl f 搜索框
+        visibility: hidden;
+        padding: 5px;
+        width: 500px;
+        position: fixed;
+        z-index: 100;
+        right: 50px;
+        top: 0px;
+        height: 30px;
+        background: var(--vscode-editorWidget-border);
+        box-shadow: 10px 10px 5px var(--vscode-widget-shadow);
+        border: 1px solid var(--vscode-editorWidget-border);
+        display: flex;
+        align-items: center;
+        input {
+            width: 450px;
+            background: var(--vscode-input-background);
+            border: 1px solid var(--vscode-input-border);
+            color: var(--vscode-input-foreground);
+            font-size: 16px;
+            height: 30px;
+        }
+        div {
+            margin: 0px 10px;
+            display: flex;
+            justify-content: space-around;
+            width: 50px;
+            span {
+                cursor: pointer;
+                height: 20px;
+                width: 20px;
+                line-height: 20px;
+                padding: 5px;
+                border-radius: 5px;
+                &:hover {
+                    background: var(--vscode-button-secondaryHoverBackground)
+                }
+            }
+        }
+    }
+    .xf-excel-header {
+        display: flex;
+        height: 30px;
+        padding: 0px;
+        align-items: center;
+        border-top: 1px solid $xfBorderColor;
+
+        .xf-excel-header-tool-btn {
+            padding: 0 5px;
+            height: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                background: var(--vscode-tab-inactiveForeground);
+            }
+            &:active {
+                background: var(--vscode-tab-inactiveBackground);
+            }
+
+            .codicon {
+                margin-right: 3px;
+            }
+        }
+    }
+    .xf-excel-content {
+        .xf-excel-preview-input { // 头部单元格编辑框
+            margin-bottom: 0px;
+            padding: 0px;
+            $fontSize: var(--vscode-editor-font-size);
+            $lineHeight: calc(var(--vscode-editor-font-size) + 10px);
+            background: var(--vscode-tab-inactiveBackground);
+            border-top: 1px solid $xfBorderColor;
+            border-bottom: 1px solid $xfBorderColor;
+
+            & > div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                padding: 0 5px;
+                font-size: $fontSize;
+                line-height: 140px;
+                background: var(--vscode-tab-inactiveBackground);
+                width: 100px;
+            }
+
+            & > textarea {
+                padding: 5px 5px 5px 120px;
+                height: 130px;
+                line-height: 12px;
+                resize: none;
+                width: calc(100% - 120px - 5px);
+                border: none;
+                outline: none;
+                background: var(--vscode-editor-background);
+                font-family: var(--vscode-editor-font-family);
+                font-weight: var(--vscode-editor-font-weight);
+                font-size: 12px;
+                color: var(--vscode-foreground);
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        .xf-excel-body {
+            max-width: 100%;
+            min-width: 100%;
+            max-height: calc(100vh - 217px);
+            min-height: calc(100vh - 217px);
+            overflow: auto;
+
+            table {
+                font-family: var(--vscode-editor-font-family);
+                font-weight: var(--vscode-editor-font-weight);
+                font-size: var(--vscode-editor-font-size);
+                color: var(--vscode-foreground);
+                border-collapse: collapse;
+                width: 100%;
+                min-width: 1000px;
+                position: relative;
+
+                thead th {
+                    cursor: default;
+                    position:sticky;
+                    top:0;
+                    background: var(--vscode-tab-inactiveBackground);
+                    z-index: 1;
+                }
+                td {
+                    cursor: cell;
+                }
+                td, th {
+                    div {
+                        min-width: 100px;
+                        max-width: 100px;
+                        max-height: 20px;
+                        overflow: hidden;
+                    }
+                    white-space: pre;
+                    text-align: center;
+                    border: 1px solid $xfBorderColor;
+                    padding: 5px;
+                    &:first-child {
+                        cursor: default;
+                        max-width: 50px;
+                        border-left: none !important;
+                        position: sticky;
+                        left:0;
+                        background: var(--vscode-tab-inactiveBackground);
+                        z-index: 1;
+                    }
+                    &:last-child {
+                        border-left: none !important;
+                    }
+                }
+                th:first-child {
+                    z-index: 2;
+                }
+
+                tbody {
+                    textarea {
+                        border: solid 1px var(--vscode-focusBorder);
+                        position: absolute;
+                        resize: none;
+                        background: var(--vscode-editor-background);
+                        
+                        font-family: var(--vscode-editor-font-family);
+                        font-weight: var(--vscode-editor-font-weight);
+                        font-size: var(--vscode-editor-font-size);
+                        color: var(--vscode-foreground);
+                    }
+                }
+            }
+        }
+
+        .xf-excel-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0px;
+            border-top: 1px solid var(--vscode-editorLineNumber-foreground);
+
+            .xf-excel-status-bar {
+                display: flex;
+                & > div {
+                    margin-left: 10px;
+                }
+            }
+            .xf-excel-pagination {
+                padding: 0px 10px;
+                button {
+                    cursor: pointer;
+                    color: var(--vscode-button-foreground);
+                    background-color: var(--vscode-button-background);
+                    border: none;
+
+                    &:hover {
+                        background-color: var(--vscode-button-hoverBackground);
+                    }
+                }
+                select {
+                    cursor: pointer;
+                    margin: 0px 10px;
+                    background-color: var(--vscode-dropdown-background);
+                    color: var(--vscode-dropdown-foreground);
+                    border-color: var(--vscode-dropdown-border);
+                }
+            }
+        }
+    }
+}
