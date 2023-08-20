@@ -1,6 +1,6 @@
 import { JsonData, Respond, Sender } from "simple-webview"
 import { workspace } from "vscode";
-import { CSVManager } from "../../csv/CSVManager";
+import { CSVManager } from "../../csv/csvManager";
 
 export function initCsvEditor(params: JsonData, respond: Respond, send?: Sender) {
     let manage: CSVManager | undefined = CSVManager.cache.get(params.fsPath)

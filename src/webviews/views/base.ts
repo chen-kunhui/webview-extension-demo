@@ -1,49 +1,75 @@
-import {Uri, Webview, ViewColumn, window} from 'vscode'
-import { View } from './interface'
+import { Uri, Webview, ViewColumn, window, WebviewView, WebviewViewResolveContext, CancellationToken, WebviewViewProvider, TextDocument, WebviewPanel, CustomTextEditorProvider } from 'vscode'
 import { URLS } from '../urls'
 import { readFileSync } from 'fs'
 import { RouteDispatcher } from 'simple-webview'
 
-export abstract class BaseView implements View {
-    abstract readonly page: Uri;
-    protected webview: Webview | undefined | null;
+export abstract class BaseView implements WebviewViewProvider, CustomTextEditorProvider {
+    public readonly viewType: string
+    public readonly title: string
+
     protected readonly webviewResourceRoot: Uri
 
-    constructor (
-        public extensionUri: Uri,
-        public readonly title: string,
-        public readonly viewType?: string,
+    abstract readonly page: Uri;
+
+    constructor(
+        public readonly extensionUri: Uri,
+        viewType: string,
+        title?: string,
     ) {
+        this.viewType = viewType
+        this.title = title || this.viewType
         this.webviewResourceRoot = Uri.joinPath(this.extensionUri, 'ui/dist')
-        this.viewType = viewType || this.title
     }
 
-    public show(viewColumn: ViewColumn = ViewColumn.Active) {
+    // 侧边栏和底部面板类型的 webview
+    public resolveWebviewView(
+        webviewView: WebviewView,
+        _: WebviewViewResolveContext,
+        __: CancellationToken,
+    ) {
+        this.renderWebview(webviewView.webview)
+    }
+
+    // 自定义编辑器渲染器类型的webview
+    public async resolveCustomTextEditor(
+		document: TextDocument,
+		webviewPanel: WebviewPanel,
+		token: CancellationToken
+	): Promise<void> {
+		this.renderWebview(webviewPanel.webview)
+	}
+
+    // 编辑区 webview
+    public resolveView(viewColumn: ViewColumn = ViewColumn.Active) {
         const panel = window.createWebviewPanel(
-            this.viewType || this.title,
+            this.viewType,
             this.title,
-            viewColumn,
-            {
-                enableScripts: true,
-                localResourceRoots: [this.webviewResourceRoot]
-            }
+            viewColumn
         );
-        this.webview = panel.webview;
-        new RouteDispatcher(URLS).mount(this.webview)
 
-        this.webview.html = this.renderHtml()
+        this.renderWebview(panel.webview)
     }
 
-    protected renderHtml(): string {
-        if (!this.webview) {
-            return ''
+    public renderWebview(webview: Webview, metaTags: string[] = []) {
+        webview.options = {
+            enableScripts: true,
+            localResourceRoots: [
+                this.webviewResourceRoot
+            ]
+        };
+        new RouteDispatcher(URLS).mount(webview)
+        this.renderHtml(webview, metaTags)
+    }
+
+    protected renderHtml(webview: Webview, metaTags: string[] = []) {
+        const assetsHost = webview.asWebviewUri(this.page)
+        let el = [`<base href="${assetsHost}" />`]
+        if (metaTags) {
+            el = [...el, ...metaTags]
         }
 
-        const assetsHost = this.webview.asWebviewUri(this.page)
-        const el = `<base href="${assetsHost}" />`
-    
         let html = readFileSync(this.page.fsPath).toString()
-        html = html.replace('<!--base tag-->', el)
-        return html
+        html = html.replace('<!--base tag-->', el.join("\n"))
+        webview.html = html
     }
 }
