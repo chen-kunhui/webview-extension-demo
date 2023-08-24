@@ -27,10 +27,10 @@ export interface Disposable {
     dispose(): any;
 }
 
-export interface VsCode {
-    postMessage: (message: Request) => void
+export interface SocketAdapter {
+    send: (message: Request) => any
+    onmessage: (callback: (message: Response) => any) => any
 }
-
 
 export interface Socket {
     send: (url: string, params?: JsonData) => Promise<any>
